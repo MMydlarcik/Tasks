@@ -21,6 +21,9 @@ class TasksController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
+        if(!isset($request->done))
+        $input['done'] = false;
+        else $input['done'] = true;
         Task::create($input);
         return redirect('task')->with('flash_message', 'Task Addedd!');  
     }
@@ -41,6 +44,9 @@ class TasksController extends Controller
     {
         $task = Task::find($id);
         $input = $request->all();
+        if(!isset($request->done))
+        $input['done'] = false;
+        else $input['done'] = true;
         $task->update($input);
         return redirect('task')->with('flash_message', 'Task Updated!');  
     }
