@@ -6,7 +6,7 @@
   
         <div class="card-body">
         <h5 class="card-title">Task : {{ $tasks->task }}</h5>
-        <p class="card-text">Done : {{ $tasks->done }}</p>
+        <p class="card-text">Done : {{ $tasks->done == 1 ? 'OK' : '' }}</p>
   </div>
       
     </hr>

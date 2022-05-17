@@ -11,7 +11,7 @@
         <label>Task</label></br>
         <input type="text" name="task" id="task" value="{{$tasks->task}}" class="form-control"></br>
         <label>Done</label></br>
-        <input type="checkbox" name="done" id="done" value="{{$tasks->done}}" class="form-check-input"></br>
+        <input type="checkbox" name="done" id="done" value="{{$tasks->done}}" {{$tasks->done == 1 ? 'checked' : ''}} class="form-check-input"></br>
         <input type="submit" value="Update" class="btn btn-success"></br>
     </form>
   

@@ -9,7 +9,7 @@
         <label>Task</label></br>
         <input type="text" name="task" id="task" class="form-control"></br>
         <label>Done</label></br>
-        <input type="checkbox" name="done" id="done" class="form-check-input" value=""></br>
+        <input type="checkbox" name="done" id="done" class="form-check-input" value="done"></br>
         <input type="submit" value="Save" class="btn btn-success"></br>
     </form>
   
