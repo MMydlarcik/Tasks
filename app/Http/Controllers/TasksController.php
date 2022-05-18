@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 use Illuminate\Http\Request;
+use \App\Http\Requests\StorePostRequest;
+
 
 class TasksController extends Controller
 {
@@ -18,8 +20,13 @@ class TasksController extends Controller
         return view('task.create');
     }
   
+    
     public function store(Request $request)
     {
+        $validated = $request->validate([
+            'task' => 'required|min:5',
+        ]);
+                
         $input = $request->all();
         if(!isset($request->done))
         $input['done'] = false;
