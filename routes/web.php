@@ -20,3 +20,9 @@ Route::get('/', function () {
 
 Route::resource('tasks','App\Http\Controllers\TasksController');
 Route::resource("/task", TasksController::class);
+
+Route::get('/login',[TasksController::class, 'login']);
+Route::get('/registration',[TasksController::class, 'registration']);
+Route::post('/register-user',[TasksController::class, 'registerUser'])->name('register-user');
+Route::post('/login-user',[TasksController::class, 'loginUser'])->name('login-user');
+Route::get('/index',[TasksController::class, 'index']);
