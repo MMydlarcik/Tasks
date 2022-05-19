@@ -3,14 +3,56 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
+use App\Models\User;
 use Illuminate\Http\Request;
 use \App\Http\Requests\StorePostRequest;
-
+use Illuminate\Contracts\Session\Session;
 
 class TasksController extends Controller
 {
-    public function index()
+    public function login()
     {
+        return view('task.login');
+    }
+
+    public function registration()
+    {
+        return view('task.registration');
+    }
+
+    public function registerUser(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:5',
+        ]);
+        $user = new User();
+        $user->email = $request->email;
+        $user->password = $request->password;
+        $res = $user->save();
+        if ($res){
+            return back()->with('success', 'You are registered now.');
+        }else {
+            return back()->with('fail', 'Registration failed.');
+        }
+    }
+
+    public function loginUser(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|min:5',
+        ]);
+        $user = User::where('email','=',$request->email)->first();
+        if ($user){
+            return redirect('index');
+        }else {
+            return back()->with('fail', 'You are not registered.');
+        }
+    }
+
+    public function index()
+    {   
         $tasks = Task::all();
         return view ('task.index')->with('tasks', $tasks);
     }
