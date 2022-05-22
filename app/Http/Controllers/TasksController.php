@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use \App\Http\Requests\StorePostRequest;
 use Illuminate\Contracts\Session\Session;
+use Illuminate\Support\Facades\Auth;
 
 class TasksController extends Controller
 {
@@ -45,14 +46,28 @@ class TasksController extends Controller
         ]);
         $user = User::where('email','=',$request->email)->first();
         if ($user){
-            return redirect('index');
+            if (User::where('password','=',$request->password)->first()){
+                $request->session()->put('loginId',$user->id);
+                Auth::login($user);
+                return redirect('index');
+            }else {
+                return back()->with('fail', 'Passsword is not correct.');    
+            }
         }else {
             return back()->with('fail', 'You are not registered.');
         }
     }
 
+    public function logout()
+    {
+        if (session()->has('loginId')){
+            session()->pull('loginId');
+            return redirect('login');
+        }
+    }
+
     public function index()
-    {   
+    {       
         $tasks = Task::all();
         return view ('task.index')->with('tasks', $tasks);
     }

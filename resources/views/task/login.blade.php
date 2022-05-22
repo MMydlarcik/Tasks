@@ -28,7 +28,7 @@
                 <hr>
                     <div class="form-group">
                     <label for="email">E-mail:</label>
-                    <input type="text" class="form-control" placeholder="Enter Your e-mail" name="email" value=""> 
+                    <input type="text" class="form-control" placeholder="Enter Your e-mail" name="email" value="{{old('email')}}"> 
                     <span class="text-danger">@error('email') {{$message}} @enderror</span>   
                 </div> 
                 <div class="form-group">

@@ -1,6 +1,9 @@
 @extends('task.layout')
 @section('content')
     <div class="container">
+        <span>Logged user: <h5>{{auth()->user()->email}}</h5></span>
+        <span><a href="logout">Logout</a></span>
+        <br>
         <div class="row">
             <div class="col-md-9">
                 <div class="card">
