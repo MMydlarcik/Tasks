@@ -25,9 +25,6 @@ Route::resource("/task", TasksController::class);
 Route::post('/register-user',[TasksController::class, 'registerUser'])->name('register-user');
 Route::post('/login-user',[TasksController::class, 'loginUser'])->name('login-user');
 Route::get('/logout',[TasksController::class, 'logout'])->name('logout');
-
-Route::group(['middleware'=>['authCheck']], function(){
-    Route::get('/login',[TasksController::class, 'login']);
-    Route::get('/registration',[TasksController::class, 'registration']);
-    Route::get('/index',[TasksController::class, 'index']);
-});
+Route::get('/registration',[TasksController::class, 'registration']);
+Route::get('/login',[TasksController::class, 'login']);
+Route::get('/index',[TasksController::class, 'index'])->middleware('auth');
