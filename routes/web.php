@@ -26,5 +26,5 @@ Route::post('/register-user',[TasksController::class, 'registerUser'])->name('re
 Route::post('/login-user',[TasksController::class, 'loginUser'])->name('login-user');
 Route::get('/logout',[TasksController::class, 'logout'])->name('logout');
 Route::get('/registration',[TasksController::class, 'registration']);
-Route::get('/login',[TasksController::class, 'login']);
+Route::get('/login',[TasksController::class, 'login'])->name('login');
 Route::get('/index',[TasksController::class, 'index'])->middleware('auth');
