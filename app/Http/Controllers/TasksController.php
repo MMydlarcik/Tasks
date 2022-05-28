@@ -5,9 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Task;
 use App\Models\User;
 use Illuminate\Http\Request;
-use \App\Http\Requests\StorePostRequest;
-use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+
+
 
 class TasksController extends Controller
 {
@@ -29,7 +30,7 @@ class TasksController extends Controller
         ]);
         $user = new User();
         $user->email = $request->email;
-        $user->password = $request->password;
+        $user->password = Hash::make($request->password);
         $res = $user->save();
         if ($res){
             return back()->with('success', 'You are registered now.');
@@ -40,11 +41,11 @@ class TasksController extends Controller
 
     public function loginUser(Request $request)
     {
-        $request->validate([
+        $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required|min:5',
         ]);
-        $user = User::where('email','=',$request->email)->first();
+        /*$user = User::where('email','=',$request->email)->first();
         if ($user){
             if (User::where('password','=',$request->password)->first()){
                 $request->session()->put('loginId',$user->id);
@@ -55,21 +56,31 @@ class TasksController extends Controller
             }
         }else {
             return back()->with('fail', 'You are not registered.');
-        }
+        }*/
+
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+            return redirect()->intended('index');
+        }else  
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ])->onlyInput('email');
+    
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
-        if (session()->has('loginId')){
-            session()->pull('loginId');
+            Auth::logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
             return redirect('login');
-        }
     }
+    
 
     public function index()
-    {       
-        $tasks = Task::all();
-        return view ('task.index')->with('tasks', $tasks);
+    {   
+            $tasks = Task::all();
+            return view ('task.index')->with('tasks', $tasks);
     }
     
     public function create()
