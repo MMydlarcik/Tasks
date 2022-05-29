@@ -27,4 +27,6 @@ Route::post('/login-user',[TasksController::class, 'loginUser'])->name('login-us
 Route::get('/logout',[TasksController::class, 'logout'])->name('logout');
 Route::get('/registration',[TasksController::class, 'registration']);
 Route::get('/login',[TasksController::class, 'login'])->name('login');
-Route::get('/index',[TasksController::class, 'index'])->middleware('auth');
+Route::get('/index',[TasksController::class, 'index'])
+    ->middleware('auth')
+    ->middleware('prevent-back-history');
