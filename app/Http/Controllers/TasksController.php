@@ -7,7 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-
+use App\Count;
 
 class TasksController extends Controller
 {
@@ -78,8 +78,17 @@ class TasksController extends Controller
 
     public function index()
     {   
+            $count = new Count();
+            $totalCount = $count->totalCount();
+            $doneCount = $count->doneCount();
+            $undoneCount = $count->undoneCount();
             $tasks = Task::all();
-            return view ('task.index')->with('tasks', $tasks);
+            return view ('task.index')->with([
+                'tasks'=> $tasks,
+                'totalCount'=> $totalCount,
+                'doneCount'=> $doneCount,
+                'undoneCount' => $undoneCount
+            ]);
     }
     
     public function create()
