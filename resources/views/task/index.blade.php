@@ -49,6 +49,9 @@
                     </div>
                 </div>
             </div>
+        <span>Tasks total: {{ $totalCount }}</span>    
+        <span>Count of done: {{ $doneCount }}</span>    
+        <span>Count of undone: {{ $undoneCount }}</span>    
         </div>
     </div>
 @endsection
